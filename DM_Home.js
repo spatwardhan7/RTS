@@ -1,0 +1,51 @@
+<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>-->
+
+
+$(document).ready(function(){
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = "http://maps.google.com/maps/api/js?key=AIzaSyC92fdUb1bjJUNn5DqujGNriCsO6V0cTvA&sensor=true";
+	document.body.appendChild(script);	
+});
+
+function displayOptions()
+{
+	$('#menuButtons').hide();
+	$('#selectButtons').show();
+}
+
+function displayDisasterType()
+{
+	$('#selectButtons').hide();
+	$('#selectDisasters').show();
+}
+
+function displayDisasterMap()
+{
+	$,ajax({
+
+
+
+	});
+
+	$('#menuButtons').hide();
+	$('#selectDisasters').hide();
+	startMap();
+	alert("Start Map returned");
+}
+
+function startMap()
+{	
+	var mapOptions = 
+	{
+    	center: new google.maps.LatLng(-34.397, 150.644),
+    	zoom: 8,
+    	mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
+        
+    var map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+    alert("after var map");
+    $('#map_canvas').show();
+}
+
+//google.maps.event.addDomListener(window,'load',startMap);

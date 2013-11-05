@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+
+<div data-role="page">
+    <div data-role='header' data-position='inline' data-theme='d'>
+	    <h1>GT Food App</h1>
+	</div>
+	
+	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCmmvyzLDJPwGZGgzyBprJDtrTBALBTBYE&sensor=false&callback=initialize"></script>
+	<script type="text/javascript"charset="utf-8">google.load("maps","2.x"); google.load("jquery","1.3.1");</script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+ 	<style>
+#map_canvas {
+    width:500px;
+    height:300px;
+	align:left;
+    border:1px solid #efefef;
+    margin:auto;
+    -moz-box-shadow:5px 5px 10px #000;
+    -webkit-box-shadow:5px 5px 10px #000;
+}
+#floor1, #floor2,#composite{
+    width:500px;
+    height:500px;
+    border:1px solid #efefef;
+    margin:auto;
+    -moz-box-shadow:5px 5px 10px #000;
+    -webkit-box-shadow:5px 5px 10px #000;
+}
+.menuTable123 {
+    border-collapse: collapse;
+    font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+    font-size: 14px;
+    margin: 20px;
+    text-align: left;
+    width: 250px;
+}
+#menuTable th {
+    background: none repeat scroll 0 0 #B9C9FE;
+    border-bottom: 1px solid #FFFFFF;
+    border-top: 4px solid #AABCFE;
+    color: #003399;
+    padding: 8px;
+}
+#menuTable td {
+    background: none repeat scroll 0 0 #E8EDFF;
+    border-bottom: 1px solid #FFFFFF;
+	 border-top: 1px solid transparent;
+	 color: #666699;
+    padding: 8px;
+}
+#WendingTable {
+    border-collapse: collapse;
+    font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+    font-size: 14px;
+    margin: 20px;
+    text-align: left;
+    width: 300px;
+}
+#WendingTable th {
+    background: none repeat scroll 0 0 #B9C9FE;
+    border-bottom: 1px solid #FFFFFF;
+    border-top: 4px solid #AABCFE;
+    color: #003399;
+    padding: 8px;
+}
+#WendingTable td {
+    background: none repeat scroll 0 0 #E8EDFF;
+    border-bottom: 1px solid #FFFFFF;
+    border-top: 1px solid transparent;
+    color: #666699;
+    padding: 8px;
+}
+#RestTimings {
+text-align:center;
+font-size: 9px;
+}
+
+#PaymentMethods {
+text-align:center;
+font-size: 9px;
+}
+
+#legend123 {
+    font-size: 9px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 210px;
+}
+.text-bottom-padded123 {
+    display: block;
+    float: right;
+    line-height: 20px;
+}
+
+</style>
+	
+	<div id="content" data-role="content">
+		
+		<div id="menuButtons">
+		<form name="go">
+			
+			<input type="button" name="restaurant" value="Restaurant" data-transition="slideup" onclick="populateRest()">
+			<input type="button" name="facilities" value="Facilities" data-transition="slideup" onclick="populateFac()">
+		</form>
+		</div>
+		<div id="all_restaurants">
+		
+			<div id="blank"></div>
+			
+			<div id="restaurant" style="display:none">
+			<select id="id_restaurants" onchange="getRestaurants()">
+				<option>Select Restaurant</option>
+			</select>
+			</div>
+			<div id="RestTimings"></div>
+			<div id="PaymentMethods"></div>
+			<div id="menu" style="display:none">
+			
+			</div>	
+			
+		<div id="map_canvas" style="display:none"></div>
+		</div>
+		
+		
+		<div id="all_facilities">
+		<div id="facilities" style="display:none">
+			<select id="places" onchange="getFloors()">
+				<option>Select Building</option>
+			</select>
+		</div>
+		
+		<div id ="floors" style="display:none">
+			<select id="floorsdropdown" onchange="getFloorData()" >
+				<option>Select Floor</option>	
+			</select>
+		</div>
+		
+		<div id="legend123" style="align:center;display:none" align="center">
+			<table id="legendT123" align="center">
+				<tr>
+					<td>
+						<img id="fountain" height="20px" width="20px" src="images/icons/fountain.jpg"/>
+						<span class="text-bottom-padded123">&nbsp;&nbsp;Water Fountain</span>
+					</td>
+					<td>
+						<img id="restroom" height="20px" width="20px" src="images/icons/restroom.jpg"/>
+						<span class="text-bottom-padded123">&nbsp;&nbsp;Restroom</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">	
+						<img id="wendingmachine" height="20px" width="20px" src="images/icons/VendingMachine.jpg"/>
+						<span class="text-bottom-padded123">&nbsp;&nbsp;Click on vending machine to view details</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id = "dynamicFloor" style="text-align:center; width:448px; margin-left:auto; margin-right:auto; display:none;">
+			<img id="dyn1" src="images/TSRB/1/image.jpg" usemap="#dyna" border="0" width="448" height="295" alt="" />
+		</div>
+		
+		<div id="WendingItems" style="display:none"></div>
+		
+		</div>
+		</div>
+	</div>
+
+
