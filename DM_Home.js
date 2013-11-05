@@ -22,16 +22,19 @@ function displayDisasterType()
 
 function displayDisasterMap()
 {
-	$,ajax({
-
-
-
+	$.ajax
+	({
+		url: "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.php",
+		context: document.body,
+		dataType: "json",
+		success: function(data)
+		{	
+			alert("inside success");
+			$('#menuButtons').hide();
+			$('#selectDisasters').hide();
+			startMap();
+		}
 	});
-
-	$('#menuButtons').hide();
-	$('#selectDisasters').hide();
-	startMap();
-	alert("Start Map returned");
 }
 
 function startMap()
