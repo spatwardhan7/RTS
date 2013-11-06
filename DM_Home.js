@@ -4,7 +4,6 @@
 $(document).ready(function(){
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
-	script.src = "http://maps.google.com/maps/api/js?key=AIzaSyC92fdUb1bjJUNn5DqujGNriCsO6V0cTvA&sensor=true";
 	document.body.appendChild(script);	
 });
 
@@ -22,6 +21,14 @@ function displayDisasterType()
 
 function displayDisasterMap()
 {
+	/*
+$.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.php")
+    .done(function( data ) {
+      	console.log(data);
+           });
+
+*/
+	
 	$.ajax
 	({
 		url: "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.php",
@@ -29,12 +36,14 @@ function displayDisasterMap()
 		dataType: "json",
 		success: function(data)
 		{	
+	
 			alert("inside success");
 			$('#menuButtons').hide();
 			$('#selectDisasters').hide();
 			startMap();
 		}
 	});
+
 }
 
 function startMap()
