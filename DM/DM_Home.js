@@ -98,9 +98,7 @@ function startMap()
 		var marker = new google.maps.Marker({
 			position: latlng, 
 			map: map, 
-			title: 'natkhat',
-			icon: 'boba.png'
-					
+			title: 'natkhat',					
 		});
 
 
