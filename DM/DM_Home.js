@@ -7,6 +7,17 @@ $(document).ready(function(){
 	document.body.appendChild(script);	
 });
 
+function getCircle(magnitude, color) {
+  return {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: color,
+    fillOpacity: .3,
+    scale: Math.pow(2, magnitude) / Math.PI,
+    strokeColor: 'white',
+    strokeWeight: .5
+  };
+}
+
 function displayOptions()
 {
 	$('#menuButtons').hide();
@@ -33,8 +44,6 @@ $.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.
 		context: document.body,
 		dataType: "json",
 		success: function(data){
-		$('#menuButtons').hide();
-		$('#selectDisasters').hide();	
 		startMap(data);
 	}});
    /*var jsonData = $.ajax( "services.php" )
@@ -109,21 +118,23 @@ function startMap(data)
 
  		//console.log("--");
 
-
+		var mag = jsondata.features[i].properties.mag;
+		alert (mag);
 
 	   var latlng = new google.maps.LatLng( parseFloat(jsondata.features[i].content.split(',')[2].split(':')[1]), 
 	   	                                    parseFloat(jsondata.features[i].content.split(',')[3].split(':')[1])
 	   	                                   );
 
+										   
 		var marker = new google.maps.Marker({
 			position: latlng, 
 			map: map, 
 			title: 'blank',					
+			icon: getCircle(mag, "black")
 		});
 
 
 	}
-
 
     $('#map_canvas').show();
 }
