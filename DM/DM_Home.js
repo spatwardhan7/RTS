@@ -28,10 +28,17 @@ $.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.
            });
 */
 
+   var jsonData = $.ajax( "services.php" )
+                       .done(function() { alert("success"); })
+                       .fail(function() { alert("error"); })
+                       .always(function() { alert("complete"); });
+
+   alert(jsonData.content);
+
 /*
 	$.ajax
 	({
-		url: "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.php",
+		url: "http://bruiser3.cc.gatech.edu:8080/grait-dm/feed_usgs_m25_week.php",
 		context: document.body,
 		dataType: "json",
 		success: function(data)
@@ -42,7 +49,9 @@ $.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.
 			$('#selectDisasters').hide();
 			startMap();
 		}
-	}); */
+	}); 
+
+*/
 }
 
 function startMap()
@@ -98,7 +107,7 @@ function startMap()
 		var marker = new google.maps.Marker({
 			position: latlng, 
 			map: map, 
-			title: 'natkhat',					
+			title: 'blank',					
 		});
 
 
@@ -106,19 +115,6 @@ function startMap()
 
 
     $('#map_canvas').show();
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 google.maps.event.addDomListener(window,'load',startMap);

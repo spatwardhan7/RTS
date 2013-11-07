@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<api>
+	<description>
+		<![CDATA[This is an API to interact with the central database]]>
+	</description>
+
+	<command id='earthquake' security='public'>
+		<description><![CDATA[This simple API lets ]]></description>
+		<get>
+			<description><![CDATA[This is how you can get]]></description>
+			<action file='services.php'><![CDATA[getJsonData();]]></action>
+		</get>		
+	</command>	
+
+</api>
