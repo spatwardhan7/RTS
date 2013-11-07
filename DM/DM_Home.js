@@ -32,45 +32,15 @@ function displayDisasterType()
 
 function displayDisasterMap()
 {
-/*	
-$.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.php")
-    .done(function( data ) {
-      	console.log(data);
-           });
-*/
-
 	$.ajax({
 		url: "services.php",
 		context: document.body,
 		dataType: "json",
 		success: function(data){
-		startMap(data);
-	}});
-   /*var jsonData = $.ajax( "services.php" )
-                       .done(function() { alert("success"); })
-                       .fail(function() { alert("error"); })
-                       .always(function() { alert("complete"); });
-
-	console.log(jsonData);*/
-   //alert(jsonData.content);
-
-/*
-	$.ajax
-	({
-		url: "http://bruiser3.cc.gatech.edu:8080/grait-dm/feed_usgs_m25_week.php",
-		context: document.body,
-		dataType: "json",
-		success: function(data)
-		{	
-	
-			alert("inside success");
 			$('#menuButtons').hide();
 			$('#selectDisasters').hide();
-			startMap();
-		}
-	}); 
-
-*/
+			startMap(data);
+	}});
 }
 
 function startMap(data)
@@ -83,12 +53,8 @@ function startMap(data)
     };
         
     var map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
-    alert("after var map");
     
-
-
-   var jsondata = data;
-   alert(jsondata.features[0].content);
+   	var jsondata = data;
    				   /*{
    				   	"type":"FeatureCollection","metadata":{"title":"Earthquakes: 2.5+\/week"},
    				    "features":
@@ -108,35 +74,22 @@ function startMap(data)
 	                  ]
 	                } ; */
            
-
-
-
-    for (var i = 0; i < jsondata.features.length; i++){
-
- 		//console.log("latitude: " + parseFloat(jsondata.features[i].content.split(',')[2].split(':')[1]));
- 		//console.log("longitude: "+parseFloat(jsondata.features[i].content.split(',')[3].split(':')[1]));
-
- 		//console.log("--");
+    for (var i = 0; i < jsondata.features.length; i++)
+    {
 
 		var mag = jsondata.features[i].properties.mag;
-		alert (mag);
 
-	   var latlng = new google.maps.LatLng( parseFloat(jsondata.features[i].content.split(',')[2].split(':')[1]), 
+	   	var latlng = new google.maps.LatLng( parseFloat(jsondata.features[i].content.split(',')[2].split(':')[1]), 
 	   	                                    parseFloat(jsondata.features[i].content.split(',')[3].split(':')[1])
 	   	                                   );
 
-										   
 		var marker = new google.maps.Marker({
 			position: latlng, 
 			map: map, 
 			title: 'blank',					
 			icon: getCircle(mag, "black")
 		});
-
-
 	}
 
     $('#map_canvas').show();
 }
-
-//google.maps.event.addDomListener(window,'load',startMap);
