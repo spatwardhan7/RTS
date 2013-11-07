@@ -28,12 +28,22 @@ $.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.
            });
 */
 
-   var jsonData = $.ajax( "services.php" )
+	$.ajax({
+		url: "services.php",
+		context: document.body,
+		dataType: "json",
+		success: function(data){
+		$('#menuButtons').hide();
+		$('#selectDisasters').hide();	
+		startMap(data);
+	}});
+   /*var jsonData = $.ajax( "services.php" )
                        .done(function() { alert("success"); })
                        .fail(function() { alert("error"); })
                        .always(function() { alert("complete"); });
 
-   alert(jsonData.content);
+	console.log(jsonData);*/
+   //alert(jsonData.content);
 
 /*
 	$.ajax
@@ -54,7 +64,7 @@ $.getJSON( "http://bruiser3.cc.gatech.edu:8080/grait%C2%ADdm/feed_usgs_m25_week.
 */
 }
 
-function startMap()
+function startMap(data)
 {	
 	var mapOptions = 
 	{
@@ -68,8 +78,9 @@ function startMap()
     
 
 
-   var jsondata = 
-   				   {
+   var jsondata = data;
+   alert(jsondata.features[0].content);
+   				   /*{
    				   	"type":"FeatureCollection","metadata":{"title":"Earthquakes: 2.5+\/week"},
    				    "features":
    				      [{"type":"Feature","title":"Earthquake of 2.5 magnitude or higher","content":"Date: 2013-10-30 01:58:35, magnitude: 2.700000, latitude: 44.656200, longitude: -110.423800","properties":{"mag":"2.7"},"geometry":{"type":"Point","coordinates":["44.6562","-110.4238"]}},
@@ -86,7 +97,7 @@ function startMap()
 	                   {"type":"Feature","title":"Earthquake of 2.5 magnitude or higher","content":"Date: 2013-10-30 18:40:31, magnitude: 4.000000, latitude: 38.699500, longitude: 43.240200","properties":{"mag":"4"},"geometry":{"type":"Point","coordinates":["38.6995","43.2402"]}},
 	                   {"type":"Feature","title":"Earthquake of 2.5 magnitude or higher","content":"Date: 2013-10-30 17:45:36, magnitude: 4.800000, latitude: -7.960600, longitude: 107.826400","properties":{"mag":"4.8"},"geometry":{"type":"Point","coordinates":["-7.9606","107.8264"]}}
 	                  ]
-	                } ; 
+	                } ; */
            
 
 
@@ -117,4 +128,4 @@ function startMap()
     $('#map_canvas').show();
 }
 
-google.maps.event.addDomListener(window,'load',startMap);
+//google.maps.event.addDomListener(window,'load',startMap);
