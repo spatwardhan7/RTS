@@ -1,6 +1,3 @@
-<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>-->
-
-
 $(document).ready(function(){
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
@@ -134,6 +131,7 @@ function displayDisasterMap()
 		$('#menuButtons').hide();
 		$('#selectDisasters').hide();
 	    $('#map_canvas').show();
+	    $('#backButton').show();
 		}
 }
 
@@ -173,5 +171,12 @@ function startMap(data,map,checkbox_type)
 			icon: getCircle(mag, color)
 		});
 	}
+
+}
+function backToOptions()
+{
+	    $('#backButton').hide();
+	    $('#selectDisasters').show();
+	    $('#map_canvas').hide();
 
 }
