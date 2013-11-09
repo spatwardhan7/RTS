@@ -7,7 +7,7 @@
     <div data-role='header' data-position='inline' data-theme='d'>
 	    <h1>GRAIT-DM App</h1>
 	</div>
-	
+</div>	
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC92fdUb1bjJUNn5DqujGNriCsO6V0cTvA&sensor=true"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript" src="DM_Home.js"></script>
@@ -24,7 +24,8 @@
     	-webkit-box-shadow:5px 5px 10px #000;
 	}
 </style>
-
+</head>
+<body>
 
 	<div id="content" data-role="content">
 		
@@ -42,32 +43,33 @@
 		</div>
 
 		<div id="selectDisasters" style="display:none">
-			<div id="inside_selectDisasters">
+			
 			<form name="f_selectDisasters">
 				<input id="checkbox1" type="checkbox" name="disasters" value="Earthquakes">Earthquakes<br>
 				<input id="checkbox2" type="checkbox" name="disasters" value="Landslides">Landslides<br>
 				<input id="checkbox3" type="checkbox" name="disasters" value="Rainfall">Rainfall<br>
-				<input id="checkbox4" type="checkbox" name="disasters" value="Area">Area Select<br>
-			</div>		
+
+			
+				<select id="daydropdown"> </select>														
+				<select id="monthdropdown"> </select>		
+				<select id="yeardropdown"></select>								
+				<br>
+				<select id="daydropdown_start"> </select>														
+				<select id="monthdropdown_start"> </select>		
+				<select id="yeardropdown_start"></select>								
+				<br>
+<!--				<input id="checkbox4" type="checkbox" name="disasters" value="Area">Area Select<br>-->
+			
 				<input type="button" value="Submit" data-transition="slideup" onclick="displayDisasterMap()">
 			</form>	
 		</div>
-		
+	
 		<div id="backButton" style="display:none">
 			<form name="back">
 				<input type="button" name="back" value="Back" data-transition="slideup" onclick="backToOptions()">
 			</form>
 		</div>
 
-		<div id="dateTo" style="display:none">
-			<form action="" name="">
-				<select id="daydropdown"></select> 
-				<select id="monthdropdown"></select> 
-				<select id="yeardropdown"></select> 
-			</form>
-		</div>
-
 		<div id="map_canvas" style="display:none"></div>
-
 	</div>
-</div>
+</body>
