@@ -56,7 +56,7 @@
 
 <body>
 <div class="container">	
-<div class="span12">
+<div class="span9" style="float: none; margin-left: auto; margin-right: auto"> 
 <div data-role="page" id="mainPage">
 
 
@@ -100,11 +100,17 @@
 				</div>
 				
 			</div>	
-			<div id="dropDownWrapper" class="form-group">
+			<div id="dropDownWrapper" class="form-group" >
 				<label>Select Start Date </label><br>
-				<select id="daydropdown"> </select>                                                                                                                
-                <select id="monthdropdown"> </select>                
-                <select id="yeardropdown"></select>                                                                
+				<div class="col-xs-1">
+					<select id="daydropdown" class="form-control"> </select>                                                       
+				</div>
+				<div class="col-xs-2">
+                	<select id="monthdropdown" class="form-control"> </select>                
+        		</div>
+        		<div class="col-xs-2">
+                	<select id="yeardropdown" class="form-control"></select>                                                                
+                </div>
                 <br><br>
 				<label> Select End Date </label>  <br>
                 <select id="daydropdown_start"> </select>                                                                                                               
@@ -131,8 +137,6 @@
 				<input type="button" class="btn btn-primary" name="back" value="Back" data-transition="slideup" onclick="backToOptions()">
 			</form>
 		</div>
-
-
 	</div>
 </div>
 </div>

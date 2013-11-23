@@ -67,7 +67,7 @@ function displayDisasterMap()
     browserSupportFlag = false;
     handleNoGeolocation(browserSupportFlag);
   }
-  
+
 	
 	var dayfield=document.getElementById("daydropdown");
 	var monthfield=document.getElementById("monthdropdown");
@@ -176,7 +176,7 @@ function populatedropdown(dayfield, monthfield, yearfield, dayfield_start, month
         for (var y=0; y<20; y++)
         {
                 yearfield.options[y]=new Option(thisyear, thisyear);
-                thisyear+=1;
+                thisyear-=1;
         }
         yearfield.options[0]=new Option(today.getFullYear(), today.getFullYear(), true, true); //select today's year
 
@@ -201,7 +201,7 @@ function populatedropdown(dayfield, monthfield, yearfield, dayfield_start, month
         for (var y=0; y<20; y++)
         {
                 yearfield_start.options[y]=new Option(thisyear, thisyear);
-                thisyear+=1;
+                thisyear-=1;
         }
         yearfield_start.options[0]=new Option(start_date.getFullYear(), start_date.getFullYear(), true, true); //select start_date's year
 }
