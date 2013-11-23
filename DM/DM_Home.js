@@ -1,4 +1,4 @@
-
+		
 $(document).ready(function(){
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
@@ -34,6 +34,137 @@ function displayDisasterType()
 	//$('#checkboxWrapper').css({'text-align': 'center', 'float': 'left'});
 }
 
+function displayLocationBasedFeeds()
+{
+	populatedropdown("daydropdown_2","monthdropdown_2","yeardropdown_2","daydropdown_start_2","monthdropdown_start_2","yeardropdown_start_2");
+	$('#selectButtons').hide();
+	$('#selectForLocationBased').show();
+}
+
+
+function checkSafety()
+{
+	var mapOptions = 
+	{
+    	center: new google.maps.LatLng(0,0),
+    	zoom: 1,
+    	mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
+        
+    var map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+
+
+    var initialLocation;
+    var browserSupportFlag =  new Boolean();
+
+    // Try W3C Geolocation (Preferred)
+  if(navigator.geolocation) 
+  {
+   	 	browserSupportFlag = true;
+    	navigator.geolocation.getCurrentPosition(function(position) 
+    	{
+      		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	      	map.setCenter(initialLocation);
+
+	      	 var marker = new google.maps.Marker({
+		    	position: initialLocation,
+    			map: map,
+    			title:"Current Location"
+	});
+
+
+    	}, function() 
+    	{
+      		handleNoGeolocation(browserSupportFlag);
+    	});
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+
+}
+
+function displayLocationBasedMap()
+{
+	var mapOptions = 
+	{
+    	center: new google.maps.LatLng(0,0),
+    	zoom: 1,
+    	mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
+        
+    var map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+
+
+    var initialLocation;
+    var browserSupportFlag =  new Boolean();
+
+    // Try W3C Geolocation (Preferred)
+  if(navigator.geolocation) 
+  {
+   	 	browserSupportFlag = true;
+    	navigator.geolocation.getCurrentPosition(function(position) 
+    	{
+      		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	      	map.setCenter(initialLocation);
+
+	      	 var marker = new google.maps.Marker({
+		    	position: initialLocation,
+    			map: map,
+    			title:"Current Location"
+	});
+
+
+    	}, function() 
+    	{
+      		handleNoGeolocation(browserSupportFlag);
+    	});
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+
+	var dayfield=document.getElementById("daydropdown_2");
+	var monthfield=document.getElementById("monthdropdown_2");
+	var yearfield=document.getElementById("yeardropdown_2");
+	var end_day = dayfield.value;
+	var end_month = monthfield.value;
+	var end_year = yearfield.value;
+	
+	var dayfield_start = document.getElementById("daydropdown_start_2");
+	var monthfield_start = document.getElementById("monthdropdown_start_2");
+	var yearfield_start = document.getElementById("yeardropdown_start_2");
+	var start_day = dayfield_start.value;
+	var start_month = monthfield_start.value;
+	var start_year = yearfield_start.value;
+
+	alert(start_year)
+	alert(start_month)
+	alert(start_day)
+
+	alert(end_year)
+	alert(end_month)
+	alert(end_day)
+
+
+
+	$.ajax({
+		url: "service4.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day,
+		context: document.body,
+		dataType: "json",
+		success: function(data){
+			startMap(data,map,checkbox1);
+	}});
+
+	$('#selectForLocationBased').hide();
+	$('#map_canvas').show();
+
+}
+
 function displayDisasterMap()
 {
 	var mapOptions = 
@@ -57,6 +188,14 @@ function displayDisasterMap()
     	{
       		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 	      	map.setCenter(initialLocation);
+
+	      	 var marker = new google.maps.Marker({
+		    	position: initialLocation,
+    			map: map,
+    			title:"Current Location"
+	});
+
+
     	}, function() 
     	{
       		handleNoGeolocation(browserSupportFlag);
@@ -68,6 +207,7 @@ function displayDisasterMap()
     handleNoGeolocation(browserSupportFlag);
   }
 
+ 
 	
 	var dayfield=document.getElementById("daydropdown");
 	var monthfield=document.getElementById("monthdropdown");
@@ -264,6 +404,8 @@ function applyarea()
 			ne = bounds.getNorthEast();
 			ne_lat = encodeURIComponent(ne.lat());
 			ne_lng = encodeURIComponent(ne.lng());
+
+
 			$('#map_canvas').empty();
 			
 			var mapOptions = 
