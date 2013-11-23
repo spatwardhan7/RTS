@@ -1,18 +1,43 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 
-<div data-role="page">
-    <div data-role='header' data-position='inline' data-theme='d'>
-	    <h1>GRAIT-DM App</h1>
-	</div>
-</div>	
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC92fdUb1bjJUNn5DqujGNriCsO6V0cTvA&sensor=true"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script type="text/javascript" src="DM_Home.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<!--<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">-->
+<link rel="stylesheet" href="css/bootstrap.css"  type='text/css'>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src='js/bootstrap.js'></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC92fdUb1bjJUNn5DqujGNriCsO6V0cTvA&sensor=true"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="DM_Home.js"></script>
+
+
+	
 <style>
+
+    body{
+		font-family: 'Open Sans', sans-serif;
+		
+		margin: 10px;
+	}
+
+	123#mainPage
+	{
+		
+		margin: 0 auto;
+		text-align: center;
+	
+	}
+	.centered
+	{
+		margin: 0 auto;		
+	}
+
+    
 	#map_canvas 
 	{
     	width:500px;
@@ -24,52 +49,93 @@
     	-webkit-box-shadow:5px 5px 10px #000;
 	}
 </style>
+
+
 </head>
+
+
 <body>
+<div class="container">	
+<div class="span12">
+<div data-role="page" id="mainPage">
+
+
+	<h1><a href="#">GRAIT-DM App</a></h1>
+    <!--<div data-role='header' data-position='inline' data-theme='d'>
+	    <h1>GRAIT-DM App</h1>
+	</div>-->
+	
+	
 
 	<div id="content" data-role="content">
 		
-		<div id="menuButtons">
+		<div id="menuButtons" class="btn-group">
 			<form name="go">
-				<input type="button" name="menu" value="Menu" data-transition="slideup" onclick="displayOptions()">
+				<input type="button" class="btn btn-primary" name="menu" value="Menu" data-transition="slideup" onclick="displayOptions()">
 			</form>
 		</div>
 			
-		<div id="selectButtons" style="display:none">
+		<div id="selectButtons" style="display:none" class="btn-group">
 			<form name="selectOption">
-           		<input type="button" name="selectdisasters" value="Select Disasters" data-transition="slideup" onclick="displayDisasterType()">
-				<input type="button" name="selecttable" value="Select Table" data-transition="slideup" onclick="displayTableInfo()">			
+           		<input type="button" class="btn btn-primary" name="selectdisasters" value="Select Disasters" data-transition="slideup" onclick="displayDisasterType()">
+				<input type="button" class="btn btn-primary" name="selecttable" value="Select Table" data-transition="slideup" onclick="displayTableInfo()">			
 			</form>
 		</div>
+
 
 		<div id="selectDisasters" style="display:none">
-			
-			<form name="f_selectDisasters">
-				<input id="checkbox1" type="checkbox" name="disasters" value="Earthquakes">Earthquakes<br>
-				<input id="checkbox2" type="checkbox" name="disasters" value="Landslides">Landslides<br>
-				<input id="checkbox3" type="checkbox" name="disasters" value="Rainfall">Rainfall<br>
-
-			
-				<select id="daydropdown"> </select>														
-				<select id="monthdropdown"> </select>		
-				<select id="yeardropdown"></select>								
-				<br>
-				<select id="daydropdown_start"> </select>														
-				<select id="monthdropdown_start"> </select>		
-				<select id="yeardropdown_start"></select>								
-				<br>
-<!--				<input id="checkbox4" type="checkbox" name="disasters" value="Area">Area Select<br>-->
-			
-				<input type="button" value="Submit" data-transition="slideup" onclick="displayDisasterMap()">
+			<form name="f_selectDisasters" role="form">
+			<div id="checkboxWrapper" class="checkbox form-group">	
+				<div class="checkbox">
+					<input id="checkbox1" type="checkbox" name="disasters"> <label for="checkbox1">Earthquakes</label> 
+				</div>
+				<div class="checkbox">
+					<input id="checkbox2" type="checkbox" name="disasters"><label for="checkbox2">Landslides</label>
+				</div>
+				<div class="checkbox">
+					<input id="checkbox3" type="checkbox" name="disasters"><label for="checkbox3">Rainfall</label>
+				</div>
+				<div class="checkbox">
+					<input id="checkbox4" type="checkbox" name="disasters"><label for="checkbox4">Area Select</label>
+				</div>
+				
+			</div>	
+			<div id="dropDownWrapper" class="form-group">
+				<label>Select Start Date </label><br>
+				<select id="daydropdown"> </select>                                                                                                                
+                <select id="monthdropdown"> </select>                
+                <select id="yeardropdown"></select>                                                                
+                <br><br>
+				<label> Select End Date </label>  <br>
+                <select id="daydropdown_start"> </select>                                                                                                               
+                <select id="monthdropdown_start"> </select>                
+                <select id="yeardropdown_start"></select>                                                                
+                <br><br>
+             </div>	
+				<input type="button" class="btn btn-primary" value="Submit" data-transition="slideup" onclick="displayDisasterMap()">
 			</form>	
+
 		</div>
-	
+		
+		
+		<div id="AreaApplyButton" style="display:none">
+			<form name="area">
+				<input type="button" class="btn btn-default" name="Area" value="Apply Area" data-transition="slideup" onclick="applyarea()">
+			</form>
+		</div>
+		
+		<div id="map_canvas" style="display:none"></div>
+
 		<div id="backButton" style="display:none">
-			<form name="back">
-				<input type="button" name="back" value="Back" data-transition="slideup" onclick="backToOptions()">
+			<form name="back" class="pure-form">
+				<input type="button" class="btn btn-primary" name="back" value="Back" data-transition="slideup" onclick="backToOptions()">
 			</form>
 		</div>
 
-		<div id="map_canvas" style="display:none"></div>
+
 	</div>
+</div>
+</div>
+</div>
 </body>
+</html>
