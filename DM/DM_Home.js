@@ -42,6 +42,8 @@ function displayLocationBasedFeeds()
 }
 
 
+var userLocation = new google.maps.LatLng();
+
 function checkSafety()
 {
 	var mapOptions = 
@@ -57,22 +59,106 @@ function checkSafety()
     var initialLocation;
     var browserSupportFlag =  new Boolean();
 
+
+    var loc2;
+    var loc3;
+    var loc4;
+    var loc5;
+
     // Try W3C Geolocation (Preferred)
-  if(navigator.geolocation) 
-  {
+  	if(navigator.geolocation) 
+  	{
    	 	browserSupportFlag = true;
     	navigator.geolocation.getCurrentPosition(function(position) 
     	{
       		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 	      	map.setCenter(initialLocation);
 
+	      	checklat = initialLocation.lat();
+	      	checklng = initialLocation.lng();
+
+
+	      	checklat_pos = checklat+20;
+	      	checklat_neg = checklat-20;
+	      	checklng_pos = checklng+20;
+	      	checklng_neg = checklng-20;
+
+	      	loc2 = new google.maps.LatLng(checklat_pos,checklng_pos);
+	      	loc3 = new google.maps.LatLng(checklat_pos,checklng_neg);
+	      	loc4 = new google.maps.LatLng(checklat_neg,checklng_pos);
+	      	loc5 = new google.maps.LatLng(checklat_neg,checklng_neg);
+
+
 	      	 var marker = new google.maps.Marker({
 		    	position: initialLocation,
     			map: map,
     			title:"Current Location"
-	});
+			});
+
+	      var url_options = "&sw_lat="+checklat_neg+"\u0026sw_lng="+checklng_neg+"\u0026ne_lat="+checklat_pos+"\u0026ne_lng="+checklng_pos;
+	      
+	      var today = new Date();
+		  var end   = new Date();
+		  end.setDate(end.getDate()-3);
 
 
+		  var end_day = today.getDate();
+		  var end_month = today.getMonth()+1;
+		  var end_year = today.getFullYear();
+
+		
+		  var start_day = end.getDate();
+		  var start_month = end.getMonth()+1;
+		  var start_year = end.getFullYear();
+			
+			
+		var showMap = 0;	
+			$.ajax({
+				url: "service1.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
+				context: document.body,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data.features.length > 0)
+					{						
+						startMap(data,map,checkbox1);
+						showMap = 1;
+					}
+				},
+				async:   false
+		});
+			
+			$.ajax({
+				url: "service3.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
+				context: document.body,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data.features.length > 0)
+					{
+						startMap(data,map,checkbox3);
+						showMap = 1;
+
+					}
+				},
+				async:   false
+		});
+
+		if(showMap)
+		{
+					userLocation = initialLocation;
+					$('#map_canvas').show();
+					$('#div_email').show();
+					$('#selectButtons').hide();				
+					google.maps.event.trigger(map, 'resize');						
+					map.setCenter(initialLocation);
+		}	
+		else
+		{
+				alert("No Hazards found");			
+		}
+
+		
     	}, function() 
     	{
       		handleNoGeolocation(browserSupportFlag);
@@ -83,6 +169,18 @@ function checkSafety()
     browserSupportFlag = false;
     handleNoGeolocation(browserSupportFlag);
   }
+
+
+}
+
+
+function displayemail()
+{
+
+	alert(userLocation)
+	var mainStr = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + "Longitude = " +userLocation.lng();
+	alert(mainStr)
+	window.location.href = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + " Longitude = " +userLocation.lng();
 
 }
 
@@ -141,16 +239,6 @@ function displayLocationBasedMap()
 	var start_day = dayfield_start.value;
 	var start_month = monthfield_start.value;
 	var start_year = yearfield_start.value;
-
-	alert(start_year)
-	alert(start_month)
-	alert(start_day)
-
-	alert(end_year)
-	alert(end_month)
-	alert(end_day)
-
-
 
 	$.ajax({
 		url: "service4.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day,
@@ -358,7 +446,6 @@ function startMap(data,map,checkbox_type)
 		
 		var coords = jsondata.features[i].geometry.coordinates;
         var latlng = new google.maps.LatLng(coords[0], coords[1]);
-
 	   	
 		var color;									
 		if (checkbox_type == checkbox1)
