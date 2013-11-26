@@ -101,6 +101,7 @@ function checkSafety()
 		    	position: initialLocation,
     			map: map,
     			title:"Current Location"
+
 			});
 
 	      var url_options = "&sw_lat="+checklat_neg+"\u0026sw_lng="+checklng_neg+"\u0026ne_lat="+checklat_pos+"\u0026ne_lng="+checklng_pos;
@@ -202,9 +203,13 @@ function displayemail()
 
 	//alert("asassasaasasassa");
 	//alert(contentdbg);
-	alert(contentdbg.length);
-	var mainStr = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + "Longitude = " +userLocation.lng() + " ";
+	//alert(contentdbg.length);
+	//var mainStr = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + "Longitude = " +userLocation.lng() + " ";
 	//alert(mainStr)
+	alert(userLocation.lat())
+	alert(userLocation.lng())
+
+	/*
 	var i = 0;
 	var temp = [];
 	while(i < contentdbg.length)
@@ -217,7 +222,7 @@ function displayemail()
 		alert(temp[i]);
 		i++;
 	}
-
+	*/
 	//window.location.href = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + " Longitude = " +userLocation.lng();
 	//alert(mainStr);
 	//window.location.href = mainStr;
@@ -509,12 +514,13 @@ function startMapforLocationBased(data,map)
         }
 	}
 }
-
+/*
 function startMap(data,map,checkbox_type)
 {	
     
    	var jsondata = data;
-   				   
+   				 
+   	alert("inside start map");			   
     for (var i = 0; i < jsondata.features.length; i++)
     {
 
@@ -522,6 +528,9 @@ function startMap(data,map,checkbox_type)
 		
 		var coords = jsondata.features[i].geometry.coordinates;
         var latlng = new google.maps.LatLng(coords[0], coords[1]);
+
+        if(i == 0)
+        	alert(jsondata.features[i].title);
 	   	
 		var color;									
 		if (checkbox_type == checkbox1)
@@ -541,13 +550,13 @@ function startMap(data,map,checkbox_type)
 		var marker = new google.maps.Marker({
 			position: latlng, 
 			map: map, 
-			title: 'blank',					
+			title: jsondata.features[i].title,					
 			icon: getCircle(mag, color)
 		});
 	}
 
 }
-
+*/
 function startMap(data,map,checkbox_type)
 {	
     
@@ -579,7 +588,7 @@ function startMap(data,map,checkbox_type)
 		var marker = new google.maps.Marker({
 			position: latlng, 
 			map: map, 
-			title: 'blank',					
+			title: jsondata.features[i].title ,					
 			icon: getCircle(mag, color)
 		});
 	}
