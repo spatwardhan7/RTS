@@ -42,7 +42,10 @@ function displayLocationBasedFeeds()
 }
 
 
-var userLocation = new google.maps.LatLng();
+var lat=33.773614;
+var lng=-84.399248;
+
+var userLocation = new google.maps.LatLng(lat,lng);
 
 function checkSafety()
 {
@@ -58,12 +61,7 @@ function checkSafety()
 
     var initialLocation;
     var browserSupportFlag =  new Boolean();
-
-
-    var loc2;
-    var loc3;
-    var loc4;
-    var loc5;
+//    handleNoGeolocation(browserSupportFlag,map);
 
     // Try W3C Geolocation (Preferred)
   	if(navigator.geolocation) 
@@ -74,23 +72,23 @@ function checkSafety()
       		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 	      	map.setCenter(initialLocation);
 
+	      	
+	      	safetyCheckMap(map,initialLocation);
+
+      	  /*
+      	    var loc2;
+		    var loc3;
+    		var loc4;
+    		var loc5;
+
 	      	checklat = initialLocation.lat();
 	      	checklng = initialLocation.lng();
-
-
 
 	      	checklat_pos = checklat+20;
 	      	checklat_neg = checklat-20;
 	      	checklng_pos = checklng+20;
 	      	checklng_neg = checklng-20;
 
-
-/*
-	      	checklat_pos = 90;
-	      	checklat_neg = -90 ;
-	      	checklng_pos = 180;
-	      	checklng_neg = -180;
-*/
 	      	loc2 = new google.maps.LatLng(checklat_pos,checklng_pos);
 	      	loc3 = new google.maps.LatLng(checklat_pos,checklng_neg);
 	      	loc4 = new google.maps.LatLng(checklat_neg,checklng_pos);
@@ -105,7 +103,7 @@ function checkSafety()
 			});
 
 	      var url_options = "&sw_lat="+checklat_neg+"\u0026sw_lng="+checklng_neg+"\u0026ne_lat="+checklat_pos+"\u0026ne_lng="+checklng_pos;
-	      
+		      
 	      var today = new Date();
 		  var end   = new Date();
 		  end.setDate(end.getDate()-3);
@@ -122,78 +120,148 @@ function checkSafety()
 			
 			
 		var showMap = 0;	
-		/*
-			$.ajax({
-				url: "service1.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
-				context: document.body,
-				dataType: "json",
-				success: function(data)
-				{
-					if(data.features.length > 0)
-					{						
-						startMap(data,map,checkbox1);
-						showMap = 1;
-					}
-				},
-				async:   false
-		});
-			
-			$.ajax({
-				url: "service3.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
-				context: document.body,
-				dataType: "json",
-				success: function(data)
-				{
-					if(data.features.length > 0)
-					{
-						startMap(data,map,checkbox3);
-						showMap = 1;
-
-					}
-				},
-				async:   false
-		});
-		*/
+		
 		$.ajax({
 		url: "service4.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
 		context: document.body,
 		dataType: "json",
 		success: function(data)
-		{
-			if(data.features.length > 0)
 			{
-				startMapforLocationBased(data,map);
-				showMap = 1;
+				if(data.features.length > 0)
+				{
+					startMapforLocationBased(data,map);
+					showMap = 1;
 
-			}
-		},
-		async:   false
-	});
+				}
+			},
+			async:   false
+			});
 
-	if(showMap)
-	{
-		userLocation = initialLocation;
-		$('#map_canvas').show();
-		$('#div_email').show();
-		$('#selectButtons').hide();				
-		google.maps.event.trigger(map, 'resize');						
-		map.setCenter(initialLocation);
-	}	
-	else
-	{
-		alert("No Hazards found");			
-	}
-		
-	}, function() 
+		if(showMap)
 		{
-      		handleNoGeolocation(browserSupportFlag);
+			userLocation = initialLocation;
+			$('#map_canvas').show();
+			$('#div_email').show();
+			$('#selectButtons').hide();				
+			google.maps.event.trigger(map, 'resize');						
+			map.setCenter(initialLocation);
+		}	
+		else
+		{
+			alert("No Hazards found");			
+		}
+		*/
+
+	}, 
+	function() 
+		{
+      		handleNoGeolocation(browserSupportFlag,map);
     	});
   }
   // Browser doesn't support Geolocation
   else {
     browserSupportFlag = false;
-    handleNoGeolocation(browserSupportFlag);
+    handleNoGeolocation(browserSupportFlag,map);
   }
+ 
+}
+
+function handleNoGeolocation(browserSupportFlag,map)
+{
+	var lat=33.773614;
+ 	var lng=-84.399248;
+	 
+ 	var markerCounter = 0;
+	var hloc = new google.maps.LatLng(lat, lng);
+
+	safetyCheckMap(map,hloc);
+}
+
+function safetyCheckMap(map,initialLocation)
+{
+
+      	    var loc2;
+		    var loc3;
+    		var loc4;
+    		var loc5;
+
+	      	checklat = initialLocation.lat();
+	      	checklng = initialLocation.lng();
+
+	      	checklat_pos = checklat+20;
+	      	checklat_neg = checklat-20;
+	      	checklng_pos = checklng+20;
+	      	checklng_neg = checklng-20;
+
+	      	loc2 = new google.maps.LatLng(checklat_pos,checklng_pos);
+	      	loc3 = new google.maps.LatLng(checklat_pos,checklng_neg);
+	      	loc4 = new google.maps.LatLng(checklat_neg,checklng_pos);
+	      	loc5 = new google.maps.LatLng(checklat_neg,checklng_neg);
+
+
+
+	      	 var marker = new google.maps.Marker({
+		    	position: initialLocation,
+    			map: map,
+    			title:"Current Location"
+
+			});
+
+	      var url_options = "&sw_lat="+checklat_neg+"\u0026sw_lng="+checklng_neg+"\u0026ne_lat="+checklat_pos+"\u0026ne_lng="+checklng_pos;
+		      
+	      var today = new Date();
+		  var end   = new Date();
+		  end.setDate(end.getDate()-3);
+
+
+		  var end_day = today.getDate();
+		  var end_month = today.getMonth()+1;
+		  var end_year = today.getFullYear();
+
+		
+		  var start_day = end.getDate();
+		  var start_month = end.getMonth()+1;
+		  var start_year = end.getFullYear();
+			
+			
+		var showMap = 0;	
+		//var showMap = 1;  // Debugging	
+		
+		$.ajax({
+		url: "service4.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
+		context: document.body,
+		dataType: "json",
+		success: function(data)
+			{
+				if(data.features.length > 0)
+				{
+					//startMapforLocationBased(data,map);
+					showMap = 1;
+
+				}
+			},
+			async:   false
+			});
+		
+		if(showMap)
+		{
+			/*
+			userLocation = initialLocation;
+			$('#map_canvas').show();
+			$('#div_email').show();
+			$('#selectButtons').hide();				
+			google.maps.event.trigger(map, 'resize');						
+			map.setCenter(initialLocation);
+			*/
+			// Debugging
+			$('#div_email').show();
+			$('#selectButtons').hide();				
+			/// ***** 
+		}	
+		else
+		{
+			alert("No Hazards found");			
+		}
 
 }
 
@@ -204,10 +272,10 @@ function displayemail()
 	//alert("asassasaasasassa");
 	//alert(contentdbg);
 	//alert(contentdbg.length);
-	//var mainStr = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + "Longitude = " +userLocation.lng() + " ";
+	var mainStr = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + "Longitude = " +userLocation.lng() + " ";
 	//alert(mainStr)
-	alert(userLocation.lat())
-	alert(userLocation.lng())
+	//alert(userLocation.lat())
+	//alert(userLocation.lng())
 
 	/*
 	var i = 0;
@@ -225,9 +293,161 @@ function displayemail()
 	*/
 	//window.location.href = "mailto:" + $('#email').val() + "?subject="+ "Safety Alert" + "&body="+"Lattitude = " + userLocation.lat() + " Longitude = " +userLocation.lng();
 	//alert(mainStr);
-	//window.location.href = mainStr;
+	window.location.href = mainStr;
 }
 
+function monitorDisasters()
+{
+	$('#selectButtons').hide();	
+
+      var today = new Date();
+	  var end   = new Date();
+	  end.setDate(end.getDate()-2);
+
+
+	  var end_day = today.getDate();
+	  var end_month = today.getMonth()+1;
+	  var end_year = today.getFullYear();
+
+	
+	  var start_day = end.getDate();
+	  var start_month = end.getMonth()+1;
+	  var start_year = end.getFullYear();
+
+
+	$.ajax({
+		url: "service4.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day,
+		context: document.body,
+		dataType: "json",
+		success: function(data)
+		{
+			drawTable(data);		
+		}
+	});
+}
+
+function drawTable(data)
+{	
+
+	var jsondata = data;
+
+	//remove table	
+	var divTable = document.getElementById("divTable");
+	if (divTable) 
+	{
+	    divTable.parentNode.removeChild(divTable);
+	}
+	//create table
+	divTable = document.createElement("div");
+	divTable.id = "divTable";
+	var table = document.createElement("table");
+	  
+	//add header
+	var tr = document.createElement("tr");
+
+	var th, text;
+
+  	th = document.createElement("th");
+  	text = document.createTextNode("Location");
+  	th.appendChild(text);
+  	tr.appendChild(th);
+
+  	table.appendChild(tr);
+
+  	var geoInfo ;
+  	var coords; 
+  	//var reverse_geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=37.70833333332955,112.41666666669008&sensor=true";
+    
+	//  var rev = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ coords[0]+ "," +coords[1]+ "&sensor=true";
+	var rev  ;
+    //add rows
+  	for (var i = 0; i < jsondata.features.length; i++) 
+  	{
+    	var feature = jsondata.features[i];
+
+    	tr = document.createElement("tr");
+
+    	var td;
+
+    	td = document.createElement("td");
+		var a = document.createElement("a");
+    	a.href = feature.url;
+
+
+    	coords = feature.geometry.coordinates;
+    	rev = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ coords[0]+ "," +coords[1]+ "&sensor=true";
+
+		$.ajax(
+		{
+			url: rev,
+			context: document.body,
+			dataType: "json",
+			success: function(data, success)
+			{
+				
+				geoInfo = data;
+				//alert(data.results[0].address_components[2].long_name);
+				//alert(data.results[0].address_components[3].long_name);
+				//alert(data.results[0].address_components[4].long_name);
+			},
+			async : false
+		});
+
+		var loc;
+
+		
+
+		if(geoInfo.status == "OK")
+		{
+
+			var len =  geoInfo.results.length - 2;
+			loc = geoInfo.results[len].formatted_address;
+
+
+		//	alert(loc);	
+			/*
+			if(geoInfo.results[0].address_components[2].long_name)
+				loc += geoInfo.results[0].address_components[2].long_name;
+			if(geoInfo.results[0].address_components[3].long_name)
+				loc += geoInfo.results[0].address_components[3].long_name;
+			if(geoInfo.results[0].address_components[4].long_name)
+				loc += geoInfo.results[0].address_components[4].long_name;
+			*/
+		}
+		/*
+		if(geoInfo.results[0].address_components[2].long_name)
+			loc += geoInfo.results[0].address_components[2].long_name;
+		if(geoInfo.results[0].address_components[3].long_name)
+			loc += geoInfo.results[0].address_components[3].long_name;
+		if(geoInfo.results[0].address_components[4].long_name)
+			loc += geoInfo.results[0].address_components[4].long_name;
+		*/
+		//var loc = geoInfo.results[0].address_components[2].long_name + ", " + geoInfo.results[0].address_components[3].long_name + ", " + geoInfo.results[0].address_components[4].long_name+".";
+
+    	text = document.createTextNode(loc);
+    	a.appendChild(text);
+    	td.appendChild(a);
+    	tr.appendChild(td);
+
+    	table.appendChild(tr);
+  	}
+
+  	var str = "Found " + jsondata.features.length + " new diasters ";
+  	var heading = document.createTextNode(str);
+  	divTable.appendChild(heading);
+  	divTable.appendChild(table);
+  	document.getElementById("divResults").appendChild(divTable);
+
+  	$('#divResults').show();	
+
+
+
+
+  
+		
+
+
+}
 function displayLocationBasedMap()
 {
 	var mapOptions = 
@@ -562,6 +782,7 @@ function startMap(data,map,checkbox_type)
     
    	var jsondata = data;
    				   
+    alert(jsondata.features.length);
     for (var i = 0; i < jsondata.features.length; i++)
     {
 

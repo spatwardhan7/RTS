@@ -11,13 +11,18 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src='js/bootstrap.js'></script>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC92fdUb1bjJUNn5DqujGNriCsO6V0cTvA&sensor=true"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8fnhWkpBL0TXYxf74BQSoorO3pdzi0Y4&sensor=true"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="DM_Home.js"></script>
 
 
 	
 <style>
+
+	table { border-collapse:collapse; }
+	table,th,td { border: 1px solid black; text-align: center; }
+	th { background-color: #E6E6E6; }
+
 
     body{
 		font-family: 'Open Sans', sans-serif;
@@ -85,8 +90,11 @@
            		<br><br>
 				<input type="button" class="btn btn-primary" name="selectlocation" value="Location Based Feeds" data-transition="slideup" onclick="displayLocationBasedFeeds()">			
 				<br><br>
-				 <input type="button" class="btn btn-primary" name="selectCheckSafety" value="Safety Check" data-transition="slideup" onclick="checkSafety()">
+				 <input type="button" class="btn btn-primary" name="selectCheckSafety" value="Monitor My Location" data-transition="slideup" onclick="checkSafety()">
 				 <br><br>
+
+ 				 <input type="button" class="btn btn-primary" name="selectMonitorDisasters" value="Monitor Latest Disasters" data-transition="slideup" onclick="monitorDisasters()">
+				 <br><br>	
 			</form>
 		</div>
 
@@ -163,6 +171,8 @@
 		<br>
 		
 		<div id="map_canvas" style="display:none"></div>
+		<div id="divResults" style="display:none" class='divResults'></div>
+
 	</div>
 </div>
 </div>
