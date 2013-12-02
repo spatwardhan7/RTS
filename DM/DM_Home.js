@@ -177,6 +177,8 @@ function handleNoGeolocation(browserSupportFlag,map)
 	safetyCheckMap(map,hloc);
 }
 
+
+var globalMap ; 
 function safetyCheckMap(map,initialLocation)
 {
 
@@ -226,6 +228,7 @@ function safetyCheckMap(map,initialLocation)
 			
 		var showMap = 0;	
 		//var showMap = 1;  // Debugging	
+		var jsondata;
 		
 		$.ajax({
 		url: "service4.php?start="+start_year+"-"+start_month+"-"+start_day+"&end="+end_year+"-"+end_month+"-"+end_day+url_options,
@@ -235,14 +238,23 @@ function safetyCheckMap(map,initialLocation)
 			{
 				if(data.features.length > 0)
 				{
-					//startMapforLocationBased(data,map);
+					startMapforLocationBased(data,map);
 					showMap = 1;
+					jsondata = data;
 
 				}
 			},
 			async:   false
 			});
 		
+
+		var str = "Found " + jsondata.features.length + " disasters around you!";		
+		var heading = document.createTextNode(str);
+	  	
+  		
+  		document.getElementById("divEmail").appendChild(heading);
+
+
 		if(showMap)
 		{
 			/*
@@ -250,21 +262,31 @@ function safetyCheckMap(map,initialLocation)
 			$('#map_canvas').show();
 			$('#div_email').show();
 			$('#selectButtons').hide();				
+			*/
 			google.maps.event.trigger(map, 'resize');						
 			map.setCenter(initialLocation);
-			*/
+
+			globalMap = map;
 			// Debugging
 			$('#div_email').show();
 			$('#selectButtons').hide();				
+
+	  		$('#divEmail').show();	
+  			$('#showMap').show();
 			/// ***** 
 		}	
 		else
 		{
-			alert("No Hazards found");			
+			
 		}
 
 }
-
+function unhideMap()
+{
+	$('#map_canvas').show();				
+	google.maps.event.trigger(globalMap, 'resize');						
+	globalMap.setCenter(initialLocation);
+}
 
 function displayemail()
 {
@@ -440,14 +462,9 @@ function drawTable(data)
 
   	$('#divResults').show();	
 
-
-
-
-  
-		
-
-
 }
+
+
 function displayLocationBasedMap()
 {
 	var mapOptions = 
@@ -782,7 +799,6 @@ function startMap(data,map,checkbox_type)
     
    	var jsondata = data;
    				   
-    alert(jsondata.features.length);
     for (var i = 0; i < jsondata.features.length; i++)
     {
 
